@@ -1,82 +1,76 @@
-FastAPI Docker CI/CD with GitHub Actions
-This project shows how to automate the build and deployment of a Dockerized FastAPI app using GitHub Actions. Every push to the repository triggers a workflow that builds the Docker image and pushes it to Docker Hub.
+# 🚀 FastAPI Docker CI/CD with GitHub Actions
 
-Project Overview
-The app is a simple FastAPI server that returns a JSON response. It's containerized using Docker and automatically deployed using a GitHub Actions workflow.
+[![Docker Build](https://img.shields.io/badge/Docker-Build-blue?logo=docker)](https://hub.docker.com/r/uttkarshsh/fastapi-cicd)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/Uttkarshsh/<your-repo>/DockerBuild.yml?label=CI%2FCD&logo=github)](https://github.com/Uttkarshsh/<your-repo>/actions)
 
-Folder Structure
-main.py – FastAPI application
+This project shows how to automate the build and deployment of a **Dockerized FastAPI** app using **GitHub Actions**.  
+Every push to the repository triggers a workflow that builds the Docker image and pushes it to **Docker Hub**.
 
-requirements.txt – Python dependencies
+---
 
-Dockerfile – Contains Docker build instructions
+## 📌 Project Overview
 
-.github/workflows/DockerBuild.yml – GitHub Actions CI/CD workflow
+- 🔧 FastAPI server that returns a simple JSON response
+- 🐳 Dockerized using a custom `Dockerfile` (Ubuntu base)
+- 🤖 CI/CD pipeline using GitHub Actions
 
-README.md – Project documentation
+---
 
-Running the App Locally
-Prerequisites:
+## 📂 Folder Structure
 
-Python 3.8+
+| File/Folder                    | Description                          |
+|-------------------------------|--------------------------------------|
+| `main.py`                     | FastAPI application                  |
+| `requirements.txt`            | Python dependencies                  |
+| `Dockerfile`                  | Docker build instructions            |
+| `.github/workflows/DockerBuild.yml` | GitHub Actions CI/CD workflow |
+| `README.md`                   | Project documentation                |
 
-pip
+---
 
-Docker or Podman
+## 💻 Running the App Locally
 
-Steps:
+### ✅ Prerequisites
 
-Clone the repo:
+- Python 3.8+
+- pip
+- Docker or Podman
 
-bash
-Copy
-Edit
+### 🔨 Steps
+
+```bash
+# Clone the repo
 git clone https://github.com/Uttkarshsh/<your-repo>.git
 cd <your-repo>
-Set up a virtual environment:
 
-bash
-Copy
-Edit
+# Set up virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies:
 
-nginx
-Copy
-Edit
+# Install dependencies
 pip install -r requirements.txt
-Run the FastAPI server:
 
-css
-Copy
-Edit
+# Run FastAPI app
 uvicorn main:app --reload
-Server will be available at: http://localhost:8000
+🔗 Visit: http://localhost:8000
 
-Building and Running with Docker
-To build and run the app using Docker:
-
+🐳 Build & Run with Docker
 bash
 Copy
 Edit
 docker build -t uttkarshsh/fastapi-cicd:latest .
 docker run -d -p 8000:8000 uttkarshsh/fastapi-cicd:latest
-GitHub Actions Workflow
-The GitHub Actions workflow is triggered on every push.
+⚙️ GitHub Actions Workflow
+The workflow is triggered on every push.
 
-It does the following:
-
-Logs into Docker Hub using a secret token
+🔁 Steps:
+Logs into Docker Hub using DOCKERTOKEN
 
 Builds the Docker image
 
-Pushes the image to Docker Hub
+Pushes it to Docker Hub
 
-Workflow file: .github/workflows/DockerBuild.yml
-
-Here’s the key part of the workflow:
-
+🧾 Workflow File: .github/workflows/DockerBuild.yml
 yaml
 Copy
 Edit
@@ -94,23 +88,24 @@ jobs:
           echo ${{ secrets.DOCKERTOKEN }} | docker login -u "uttkarshsh" --password-stdin
           docker build -t uttkarshsh/fastapi-cicd:latest .
           docker push uttkarshsh/fastapi-cicd:latest
-Setting up Docker Token & GitHub Secrets
-Go to Docker Hub, open Account Settings > Security and create a new Access Token
+🔐 Setting up Secrets
+Go to Docker Hub → Account Settings > Security
 
-In your GitHub repo, go to Settings > Secrets and variables > Actions
+Create a new Access Token
 
-Create a new secret:
+In your GitHub repo:
+Settings > Secrets and variables > Actions > New repository secret
 
 Name: DOCKERTOKEN
 
-Value: (paste the Docker token)
+Value: (paste the access token)
 
-The workflow will use this token to push the image securely
+✅ The workflow will now securely authenticate and push the image.
 
-Docker Hub Image
-You can find the built image here:
-https://hub.docker.com/r/uttkarshsh/fastapi-cicd
+🐋 Docker Hub Image
+👉 https://hub.docker.com/r/uttkarshsh/fastapi-cicd
 
-Author
+👨‍💻 Author
 Uttkarsh Sharma
-GitHub: @uttkarshsh
+🔗 GitHub: @uttkarshsh
+
