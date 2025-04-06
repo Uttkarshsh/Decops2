@@ -1,64 +1,102 @@
-🚀 FastAPI Dockerized Application with CI/CD using GitHub Actions
-📌 Project Overview
-This project demonstrates Continuous Delivery by automating the creation and deployment of a Dockerized FastAPI application using GitHub Actions. The application is containerized using Docker, and on every push to the repository, the GitHub Actions workflow builds and pushes the image to Docker Hub.
+# 🚀 FastAPI Dockerized Application with GitHub Actions CI/CD
 
-🎯 Objective
-Automate the deployment of a FastAPI application using Docker and GitHub Actions to showcase CI/CD best practices.
+This repository demonstrates **Continuous Delivery (CD)** by automating the creation and deployment of a **Dockerized FastAPI application** using **GitHub Actions**.
 
-📂 Project Structure
-bash
+---
+
+## 📘 Table of Contents
+
+- [🎯 Objective](#-objective)
+- [📁 Project Structure](#-project-structure)
+- [🛠️ Prerequisites](#️-prerequisites)
+- [📦 Local Setup & Installation](#-local-setup--installation)
+- [🐳 Docker Instructions](#-docker-instructions)
+- [🔄 GitHub Actions Workflow](#-github-actions-workflow)
+- [🔐 Docker Token & GitHub Secrets](#-docker-token--github-secrets)
+- [🚀 Deployment Steps](#-deployment-steps)
+- [✅ Submission Checklist](#-submission-checklist)
+- [💡 Additional Tips](#-additional-tips)
+- [🤝 Contributing](#-contributing)
+- [📃 License](#-license)
+
+---
+
+## 🎯 Objective
+
+Automate the deployment pipeline for a FastAPI application by:
+
+- Creating a RESTful FastAPI server
+- Containerizing the application using Docker
+- Automating Docker image build & push using GitHub Actions
+
+---
+
+## 📁 Project Structure
+
+. 
+├── main.py # FastAPI server file 
+├── requirements.txt # Project dependencies 
+├── Dockerfile # Docker build instructions 
+├── .github/ 
+│ └── workflows/ 
+│ └── DockerBuild.yml # CI/CD workflow file 
+| └── README.md # Project documentation
+
+yaml
 Copy
 Edit
-.
-├── main.py                        # FastAPI server
-├── requirements.txt              # Project dependencies
-├── Dockerfile                    # Docker image configuration
-├── .github/
-│   └── workflows/
-│       └── DockerBuild.yml       # GitHub Actions CI/CD workflow
-└── README.md                     # Project documentation
-🛠️ Local Setup & Installation
-1. Clone the repository
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/yourrepository.git
-cd yourrepository
-2. Install dependencies (for local testing)
+
+---
+
+## 🛠️ Prerequisites
+
+Make sure you have the following installed:
+
+- Python 3.7+
+- Docker or Podman
+- Git
+- GitHub account
+- Docker Hub account
+
+---
+
+## 📦 Local Setup & Installation
+
+### 🔹 Clone the Repository
+
+```bash
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+🔹 Install Dependencies
 bash
 Copy
 Edit
 pip install -r requirements.txt
+🔹 Run the FastAPI Server Locally
+bash
+Copy
+Edit
+uvicorn main:app --reload
+Visit: http://127.0.0.1:8000
+
 🐳 Docker Instructions
-🔧 Build the Docker image
+🔹 Build the Docker Image
 bash
 Copy
 Edit
 docker build -t fastapi-app .
-▶️ Run the Docker container
+🔹 Run the Docker Container
 bash
 Copy
 Edit
 docker run -p 80:80 fastapi-app
-Now your FastAPI application is accessible at: http://localhost/
+Visit: http://localhost
 
-🔄 GitHub Actions Workflow (CI/CD)
-🚀 Trigger:
-On every push to the repository
+🔄 GitHub Actions Workflow
+📍 Trigger
+The workflow is triggered on every push to the repository.
 
-🔐 Authentication:
-Uses a Docker Hub Access Token stored as DOCKERTOKEN in GitHub Secrets
-
-🧱 Workflow Steps:
-Checkout the repository
-
-Authenticate to Docker Hub
-
-Build Docker image
-
-Push Docker image to Docker Hub
-
-📁 .github/workflows/DockerBuild.yml
+⚙️ Workflow Logic
 yaml
 Copy
 Edit
@@ -69,7 +107,7 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v1
 
       - name: Build & Push Docker Image
@@ -77,15 +115,16 @@ jobs:
           echo ${{ secrets.DOCKERTOKEN }} | docker login -u "<your-dockerhub-username>" --password-stdin
           docker build -t <your-dockerhub-username>/<image-name>:latest .
           docker push <your-dockerhub-username>/<image-name>:latest
-🔧 Setting Up Docker Hub & GitHub Secrets
-1. 🛡️ Generate Docker Access Token:
-Go to Docker Hub
+🔐 Docker Token & GitHub Secrets
+🔹 Generate Docker Hub Token
+Go to hub.docker.com
 
-Click on Account Settings → Security → Access Tokens
+Navigate to:
+Account Settings → Security → Access Tokens
 
-Click Generate Token, copy it
+Click on Generate Token, then copy the token
 
-2. 🔐 Add the Token to GitHub:
+🔹 Add Token to GitHub Secrets
 Go to your GitHub repository:
 Settings → Secrets and variables → Actions → New repository secret
 
@@ -94,34 +133,35 @@ Name: DOCKERTOKEN
 Value: Paste the copied token
 
 🚀 Deployment Steps
-Push your code to GitHub
+Push code changes to GitHub
 
-GitHub Actions will:
+GitHub Actions builds and pushes Docker image to Docker Hub
 
-Build the Docker image
+Pull and deploy the Docker image to your preferred cloud provider:
 
-Push it to your Docker Hub repository
+AWS EC2 / ECS
 
-You can deploy the pushed image on any cloud provider like AWS, GCP, Azure, or DigitalOcean
+GCP Cloud Run
 
-📥 Submission Checklist
-✅ GitHub Repository with:
+Azure App Service
 
-main.py
+DigitalOcean Droplets
 
-requirements.txt
+✅ Submission Checklist
+ main.py — FastAPI server
 
-Dockerfile
+ requirements.txt — Dependency file
 
-.github/workflows/DockerBuild.yml
+ Dockerfile — Docker configuration
 
-README.md
+ .github/workflows/DockerBuild.yml — GitHub Actions CI/CD file
 
-✅ Docker Hub Image URL:
-https://hub.docker.com/r/<your-dockerhub-username>/<image-name>
+ README.md — Project documentation
 
-📌 Hints & Notes
-You can use Podman as an alternative to Docker:
+ Docker Hub URL — Image hosted online
+
+💡 Additional Tips
+✅ You may use Podman as an alternative to Docker:
 
 bash
 Copy
@@ -130,19 +170,13 @@ podman machine init
 podman machine start
 alias docker=podman
 docker --version
-Dockerfile should:
+✅ Ensure port 80 is exposed in Dockerfile and container
 
-Use ubuntu as base image
+✅ To run the server inside the container:
 
-Install Python
-
-Copy app files
-
-Install FastAPI and Uvicorn
-
-Expose port 80
-
-Run the app using Uvicorn
-
-📧 Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
+bash
+Copy
+Edit
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+🤝 Contributing
+Pull requests are welcome. Please open an issue first to discuss any changes you'd like to make.
