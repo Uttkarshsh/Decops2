@@ -38,7 +38,7 @@ Every push to the repository triggers a workflow that builds the Docker image an
 
 ### 🔨 Steps
 
-```bash
+
 # Clone the repo
    git clone https://github.com/Uttkarshsh/<your-repo>.git
    cd <your-repo>
