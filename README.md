@@ -54,7 +54,9 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 🔗 Visit: http://localhost:8000
 
-🐳 Build & Run with Docker
+
+
+### 🐳 Build & Run with Docker
 bash
 Copy
 Edit
@@ -102,10 +104,12 @@ Value: (paste the access token)
 
 ✅ The workflow will now securely authenticate and push the image.
 
-🐋 Docker Hub Image
+###🐋 Docker Hub Image
 👉 https://hub.docker.com/r/uttkarshsh/fastapi-cicd
 
 👨‍💻 Author
 Uttkarsh Sharma
 🔗 GitHub: @uttkarshsh
+
+
 
