@@ -1,102 +1,82 @@
-# 🚀 FastAPI Dockerized Application with GitHub Actions CI/CD
+FastAPI Docker CI/CD with GitHub Actions
+This project shows how to automate the build and deployment of a Dockerized FastAPI app using GitHub Actions. Every push to the repository triggers a workflow that builds the Docker image and pushes it to Docker Hub.
 
-This repository demonstrates **Continuous Delivery (CD)** by automating the creation and deployment of a **Dockerized FastAPI application** using **GitHub Actions**.
+Project Overview
+The app is a simple FastAPI server that returns a JSON response. It's containerized using Docker and automatically deployed using a GitHub Actions workflow.
 
----
+Folder Structure
+main.py – FastAPI application
 
-## 📘 Table of Contents
+requirements.txt – Python dependencies
 
-- [🎯 Objective](#-objective)
-- [📁 Project Structure](#-project-structure)
-- [🛠️ Prerequisites](#️-prerequisites)
-- [📦 Local Setup & Installation](#-local-setup--installation)
-- [🐳 Docker Instructions](#-docker-instructions)
-- [🔄 GitHub Actions Workflow](#-github-actions-workflow)
-- [🔐 Docker Token & GitHub Secrets](#-docker-token--github-secrets)
-- [🚀 Deployment Steps](#-deployment-steps)
-- [✅ Submission Checklist](#-submission-checklist)
-- [💡 Additional Tips](#-additional-tips)
-- [🤝 Contributing](#-contributing)
-- [📃 License](#-license)
+Dockerfile – Contains Docker build instructions
 
----
+.github/workflows/DockerBuild.yml – GitHub Actions CI/CD workflow
 
-## 🎯 Objective
+README.md – Project documentation
 
-Automate the deployment pipeline for a FastAPI application by:
+Running the App Locally
+Prerequisites:
 
-- Creating a RESTful FastAPI server
-- Containerizing the application using Docker
-- Automating Docker image build & push using GitHub Actions
+Python 3.8+
 
----
+pip
 
-## 📁 Project Structure
+Docker or Podman
 
-. 
-├── main.py # FastAPI server file 
-├── requirements.txt # Project dependencies 
-├── Dockerfile # Docker build instructions 
-├── .github/ 
-│ └── workflows/ 
-│ └── DockerBuild.yml # CI/CD workflow file 
-| └── README.md # Project documentation
+Steps:
 
-yaml
+Clone the repo:
+
+bash
 Copy
 Edit
-
----
-
-## 🛠️ Prerequisites
-
-Make sure you have the following installed:
-
-- Python 3.7+
-- Docker or Podman
-- Git
-- GitHub account
-- Docker Hub account
-
----
-
-## 📦 Local Setup & Installation
-
-### 🔹 Clone the Repository
-
-```bash
-git clone https://github.com/<your-username>/<your-repo>.git
+git clone https://github.com/Uttkarshsh/<your-repo>.git
 cd <your-repo>
-🔹 Install Dependencies
+Set up a virtual environment:
+
 bash
+Copy
+Edit
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+Install dependencies:
+
+nginx
 Copy
 Edit
 pip install -r requirements.txt
-🔹 Run the FastAPI Server Locally
-bash
+Run the FastAPI server:
+
+css
 Copy
 Edit
 uvicorn main:app --reload
-Visit: http://127.0.0.1:8000
+Server will be available at: http://localhost:8000
 
-🐳 Docker Instructions
-🔹 Build the Docker Image
+Building and Running with Docker
+To build and run the app using Docker:
+
 bash
 Copy
 Edit
-docker build -t fastapi-app .
-🔹 Run the Docker Container
-bash
-Copy
-Edit
-docker run -p 80:80 fastapi-app
-Visit: http://localhost
+docker build -t uttkarshsh/fastapi-cicd:latest .
+docker run -d -p 8000:8000 uttkarshsh/fastapi-cicd:latest
+GitHub Actions Workflow
+The GitHub Actions workflow is triggered on every push.
 
-🔄 GitHub Actions Workflow
-📍 Trigger
-The workflow is triggered on every push to the repository.
+It does the following:
 
-⚙️ Workflow Logic
+Logs into Docker Hub using a secret token
+
+Builds the Docker image
+
+Pushes the image to Docker Hub
+
+Workflow file: .github/workflows/DockerBuild.yml
+
+Here’s the key part of the workflow:
+
 yaml
 Copy
 Edit
@@ -109,74 +89,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-
-      - name: Build & Push Docker Image
+      - name: Build & Push Image
         run: |
-          echo ${{ secrets.DOCKERTOKEN }} | docker login -u "<your-dockerhub-username>" --password-stdin
-          docker build -t <your-dockerhub-username>/<image-name>:latest .
-          docker push <your-dockerhub-username>/<image-name>:latest
-🔐 Docker Token & GitHub Secrets
-🔹 Generate Docker Hub Token
-Go to hub.docker.com
+          echo ${{ secrets.DOCKERTOKEN }} | docker login -u "uttkarshsh" --password-stdin
+          docker build -t uttkarshsh/fastapi-cicd:latest .
+          docker push uttkarshsh/fastapi-cicd:latest
+Setting up Docker Token & GitHub Secrets
+Go to Docker Hub, open Account Settings > Security and create a new Access Token
 
-Navigate to:
-Account Settings → Security → Access Tokens
+In your GitHub repo, go to Settings > Secrets and variables > Actions
 
-Click on Generate Token, then copy the token
-
-🔹 Add Token to GitHub Secrets
-Go to your GitHub repository:
-Settings → Secrets and variables → Actions → New repository secret
+Create a new secret:
 
 Name: DOCKERTOKEN
 
-Value: Paste the copied token
+Value: (paste the Docker token)
 
-🚀 Deployment Steps
-Push code changes to GitHub
+The workflow will use this token to push the image securely
 
-GitHub Actions builds and pushes Docker image to Docker Hub
+Docker Hub Image
+You can find the built image here:
+https://hub.docker.com/r/uttkarshsh/fastapi-cicd
 
-Pull and deploy the Docker image to your preferred cloud provider:
-
-AWS EC2 / ECS
-
-GCP Cloud Run
-
-Azure App Service
-
-DigitalOcean Droplets
-
-✅ Submission Checklist
- main.py — FastAPI server
-
- requirements.txt — Dependency file
-
- Dockerfile — Docker configuration
-
- .github/workflows/DockerBuild.yml — GitHub Actions CI/CD file
-
- README.md — Project documentation
-
- Docker Hub URL — Image hosted online
-
-💡 Additional Tips
-✅ You may use Podman as an alternative to Docker:
-
-bash
-Copy
-Edit
-podman machine init
-podman machine start
-alias docker=podman
-docker --version
-✅ Ensure port 80 is exposed in Dockerfile and container
-
-✅ To run the server inside the container:
-
-bash
-Copy
-Edit
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
-🤝 Contributing
-Pull requests are welcome. Please open an issue first to discuss any changes you'd like to make.
+Author
+Uttkarsh Sharma
+GitHub: @uttkarshsh
