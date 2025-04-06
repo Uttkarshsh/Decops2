@@ -40,32 +40,42 @@ Every push to the repository triggers a workflow that builds the Docker image an
 
 ```bash
 # Clone the repo
-git clone https://github.com/Uttkarshsh/<your-repo>.git
-cd <your-repo>
+   git clone https://github.com/Uttkarshsh/<your-repo>.git
+   cd <your-repo>
+
+
+
 
 # Set up virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+     python -m venv venv
+     source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install -r requirements.txt
-
+     pip install -r requirements.txt
+ 
 # Run FastAPI app
-uvicorn main:app --reload
+   uvicorn main:app --reload
+
+
+
 🔗 Visit: http://localhost:8000
 
 
 
-### 🐳 Build & Run with Docker
-bash
-Copy
-Edit
+# 🐳 Build & Run with Docker
+
 docker build -t uttkarshsh/fastapi-cicd:latest .
 docker run -d -p 8000:8000 uttkarshsh/fastapi-cicd:latest
-⚙️ GitHub Actions Workflow
+
+
+
+
+# ⚙️ GitHub Actions Workflow
 The workflow is triggered on every push.
 
 🔁 Steps:
+
+
 Logs into Docker Hub using DOCKERTOKEN
 
 Builds the Docker image
@@ -73,9 +83,7 @@ Builds the Docker image
 Pushes it to Docker Hub
 
 🧾 Workflow File: .github/workflows/DockerBuild.yml
-yaml
-Copy
-Edit
+
 name: Docker image build
 
 on: push
@@ -90,6 +98,9 @@ jobs:
           echo ${{ secrets.DOCKERTOKEN }} | docker login -u "uttkarshsh" --password-stdin
           docker build -t uttkarshsh/fastapi-cicd:latest .
           docker push uttkarshsh/fastapi-cicd:latest
+
+
+
 🔐 Setting up Secrets
 Go to Docker Hub → Account Settings > Security
 
@@ -102,9 +113,16 @@ Name: DOCKERTOKEN
 
 Value: (paste the access token)
 
+
+
+
 ✅ The workflow will now securely authenticate and push the image.
 
-###🐋 Docker Hub Image
+
+
+# 🐋 Docker Hub Image
+
+
 👉 https://hub.docker.com/r/uttkarshsh/fastapi-cicd
 
 👨‍💻 Author
