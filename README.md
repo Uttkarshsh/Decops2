@@ -54,7 +54,7 @@ Every push to the repository triggers a workflow that builds the Docker image an
      pip install -r requirements.txt
  
 # Run FastAPI app
-   uvicorn main:app --reload
+    uvicorn main:app --reload
 
 
 
@@ -65,8 +65,8 @@ Every push to the repository triggers a workflow that builds the Docker image an
 
 # 🐳 Build & Run with Docker
 
-docker build -t uttkarshsh/fastapi-cicd:latest .
-docker run -d -p 8000:8000 uttkarshsh/fastapi-cicd:latest
+    docker build -t uttkarshsh/fastapi-cicd:latest .
+    docker run -d -p 8000:8000 uttkarshsh/fastapi-cicd:latest
 
 
 
@@ -81,18 +81,25 @@ The workflow is triggered on every push.
 
 Logs into Docker Hub using DOCKERTOKEN
 
+
+
 Builds the Docker image
 
+
+
 Pushes it to Docker Hub
+
+
 
 🧾 Workflow File: .github/workflows/DockerBuild.yml
 
 name: Docker image build
 
-on: push
 
-jobs:
-  build:
+    on: push
+
+    jobs:
+    build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -107,12 +114,18 @@ jobs:
 🔐 Setting up Secrets
 Go to Docker Hub → Account Settings > Security
 
+
+
 Create a new Access Token
+
+
 
 In your GitHub repo:
 Settings > Secrets and variables > Actions > New repository secret
 
 Name: DOCKERTOKEN
+
+
 
 Value: (paste the access token)
 
